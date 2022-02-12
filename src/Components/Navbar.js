@@ -1,16 +1,17 @@
 import React from 'react';
-import '../Styles/navbar.css'
+//import '../Styles/navbar.css'
+import { Nav, LeftNav } from '../Styles/StyledNavbar';
 
 const Navbar = () => {
     return (
-        <div className='nav'>
-            <div className='left_nav'>
+        <Nav>
+            <LeftNav>
                 <ul>
                     <li><a href='#'>Crud Demo</a></li>
                     <li></li>
 
                 </ul>
-            </div>
+            </LeftNav>
             <div className='right_nav'>
                 <ul>
                     <li><button>+</button></li>
@@ -18,7 +19,7 @@ const Navbar = () => {
 
                 </ul>
             </div>
-        </div>
+        </Nav>
 
     )
 }
