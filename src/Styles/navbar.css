@@ -1,0 +1,51 @@
+.nav{
+    background-color: blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3rem;
+    font-size: 1.5rem;
+padding: 0 1rem;
+position: fixed;
+width: 100vw;
+
+}
+
+.nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.nav ul li{
+    padding: 0 0.1rem;
+}
+
+.nav ul li a:link{
+    text-decoration: none;
+    color: white;
+}
+
+.left_nav{
+    font-weight: 700;
+}
+
+.nav button{
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.9rem;
+    font-weight: 900;
+    background: red;
+    color: white;
+    /* border: 1px solid red; */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.nav button:hover{
+    background: white;
+    color: red;
+}
+
