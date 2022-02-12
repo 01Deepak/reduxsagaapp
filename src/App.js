@@ -1,8 +1,11 @@
-import './App.css';
+import Navbar from './Components/Navbar';
 
 function App() {
   return (
-    <h1>Hi I am Deepak Singh.</h1>
+    <>
+      <Navbar />
+
+    </>
   );
 }
 
