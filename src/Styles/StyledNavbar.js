@@ -9,6 +9,7 @@ height: 3rem;
 font-size: 1.5rem;
 padding: 0 1rem;
 position: fixed;
+top:0;
 width: 100vw;
 
 & ul{
