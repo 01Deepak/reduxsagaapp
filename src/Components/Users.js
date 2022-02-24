@@ -8,20 +8,21 @@ const Users = () => {
     const { usersList } = useSelector((state) => state.UsersReducer)
     console.log("usersList--", usersList)
     useEffect(async () => {
-        const url = "https://jsonplaceholder.typicode.com/users";
-        const result = await fetch(url);
-        const data = await result.json();
+        // const url = "https://jsonplaceholder.typicode.com/users";
+        // const result = await fetch(url);
+        // const data = await result.json();
         //console.log(data);
-        dispatch(AllUserList(data));
+        dispatch(AllUserList());
     }, [])
     return (
 
         usersList.map((val) => {
             return (
-                <div style={{ marginTop: "48px" }}>
+                <div style={{ marginTop: "48px" }} key={val.id}>
                     <h3>Id:{val.id}</h3>
                     <h4>Name:{val.name}</h4>
                     <h5>email:{val.email}</h5>
+
                 </div>
             )
         })

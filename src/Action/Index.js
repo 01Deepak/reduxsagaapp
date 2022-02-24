@@ -1,9 +1,15 @@
-import { ALLUSERLIST } from "./ActionTypes"
+import { GETALLUSERLIST, GETALLUSERLISTSUCCESS } from "./ActionTypes"
 
 
-export const AllUserList = (payload) => {
+export const AllUserList = () => {
     return {
-        type: ALLUSERLIST,
+        type: GETALLUSERLIST
+    }
+}
+
+export const getAllUserListSuccess = (payload) => {
+    return {
+        type: GETALLUSERLISTSUCCESS,
         payload: payload
     }
 }
