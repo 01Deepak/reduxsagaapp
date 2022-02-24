@@ -1,19 +1,24 @@
-import { ALLUSERLIST } from "../Action/ActionTypes"
+import { GETALLUSERLIST, GETALLUSERLISTSUCCESS } from "../Action/ActionTypes"
 
 const initialState = {
     usersList: []
 }
 
-const getAllUsersList = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
+    console.log(action)
     switch (action.type) {
-        case ALLUSERLIST:
+        case GETALLUSERLIST:
+            return {
+                ...state
+            }
+        case GETALLUSERLISTSUCCESS:
+            console.log("sdfs")
             return {
                 ...state,
                 usersList: action.payload
             }
-
         default: return state;
     }
 }
 
-export default getAllUsersList;
+export default userReducer;
