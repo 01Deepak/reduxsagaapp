@@ -42,10 +42,13 @@ cursor:pointer;
 
 export const CardParentDiv = styled.div`
 display: flex;
-justify-content: center;
 flex-wrap: wrap;
 // border: 3px solid yellow;
 box-sizing: border-box;
 max-width: 66rem;
 margin: 50px auto;
+`
+
+export const CenterLoaderSpan = styled.span`
+margin: auto;
 `

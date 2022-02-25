@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AllUserList } from '../Action/Index';
-import { Card, Button, CardBody, ButtonDiv } from '../Styles/UsersStyles';
+import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 
 
@@ -22,13 +22,9 @@ const Users = () => {
 
     if (usersLoader) {
         return (
-
-
-            <div className='ddd'>
+            <CenterLoaderSpan>
                 <TailSpin color="#00BFFF" height={150} width={150} />
-            </div>
-
-
+            </CenterLoaderSpan>
         )
     }
     return (
@@ -47,9 +43,7 @@ const Users = () => {
                         <Button>Edit</Button>
                         <Button>delete</Button>
                     </ButtonDiv>
-
                 </Card>
-
             )
         })
 
