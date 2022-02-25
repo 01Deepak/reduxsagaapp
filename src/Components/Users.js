@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AllUserList } from '../Action/Index';
+import { Card, Button, CardBody, ButtonDiv } from '../Styles/UsersStyles';
 
 
 const Users = () => {
@@ -18,12 +19,21 @@ const Users = () => {
 
         usersList.map((val) => {
             return (
-                <div style={{ marginTop: "48px" }} key={val.id}>
-                    <h3>Id:{val.id}</h3>
-                    <h4>Name:{val.name}</h4>
-                    <h5>email:{val.email}</h5>
 
-                </div>
+                <Card key={val.id}>
+                    <CardBody>
+                        <h3>Id : {val.id}</h3>
+                        <p>Name : {val.name}</p>
+                        <p>email : {val.email}</p>
+                    </CardBody>
+                    <ButtonDiv>
+                        <Button>Details</Button>
+                        <Button>Edit</Button>
+                        <Button>delete</Button>
+                    </ButtonDiv>
+
+                </Card>
+
             )
         })
 
