@@ -1,21 +1,22 @@
 import { GETALLUSERLIST, GETALLUSERLISTSUCCESS } from "../Action/ActionTypes"
 
 const initialState = {
-    usersList: []
+    usersList: [],
+    usersLoader: false
 }
 
 const userReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case GETALLUSERLIST:
             return {
-                ...state
+                ...state,
+                usersLoader: true
             }
         case GETALLUSERLISTSUCCESS:
-            console.log("sdfs")
             return {
                 ...state,
-                usersList: action.payload
+                usersList: action.payload,
+                usersLoader: false
             }
         default: return state;
     }

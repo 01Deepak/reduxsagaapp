@@ -42,6 +42,7 @@ cursor:pointer;
 
 export const CardParentDiv = styled.div`
 display: flex;
+justify-content: center;
 flex-wrap: wrap;
 // border: 3px solid yellow;
 box-sizing: border-box;
