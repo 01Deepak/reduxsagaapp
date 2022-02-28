@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Navbar />
-      <CardParentDiv className='hhh'>
+      <CardParentDiv>
         <Users />
       </CardParentDiv>
     </div>

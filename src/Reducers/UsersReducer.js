@@ -1,8 +1,9 @@
-import { GETALLUSERLIST, GETALLUSERLISTSUCCESS } from "../Action/ActionTypes"
+import { GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL } from "../Action/ActionTypes"
 
 const initialState = {
     usersList: [],
-    usersLoader: false
+    usersLoader: false,
+    isUserDetailsModalOpen: false
 }
 
 const userReducer = (state = initialState, action) => {
@@ -18,6 +19,20 @@ const userReducer = (state = initialState, action) => {
                 usersList: action.payload,
                 usersLoader: false
             }
+
+        case ISUSERDETAILSMODALOPEN:
+            return {
+                ...state,
+                isUserDetailsModalOpen: true
+            }
+
+        case CLOSEUSERDETAILSMODAL:
+            return {
+                ...state,
+                isUserDetailsModalOpen: false
+            }
+
+
         default: return state;
     }
 }

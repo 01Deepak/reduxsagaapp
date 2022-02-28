@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllUserList } from '../Action/Index';
+import { AllUserList, openUserDetailsModal } from '../Action/Index';
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
+import UserDetailsModal from './UserDetailsModal';
 
 
 const Users = () => {
     const dispatch = useDispatch();
-    const { usersList, usersLoader } = useSelector((state) => state.UsersReducer)
+    const { usersList, usersLoader, isUserDetailsModalOpen } = useSelector((state) => state.UsersReducer)
+    const [user, setUser] = useState()
 
     console.log("usersList--", usersList)
     console.log("state.UsersReducer--", usersLoader)
+    console.log("isUserDetailsModalOpen--", isUserDetailsModalOpen)
     useEffect(async () => {
         // const url = "https://jsonplaceholder.typicode.com/users";
         // const result = await fetch(url);
@@ -20,6 +23,19 @@ const Users = () => {
         dispatch(AllUserList());
     }, [])
 
+    const viewDetails = (id) => {
+        dispatch(openUserDetailsModal());
+        console.log("clicked ", id)
+        const filterUser = usersList.filter((val) => {
+            if (val.id === id) {
+                return true
+            }
+        })
+        setUser(filterUser)
+
+        document.body.style.overflow = 'hidden';
+    }
+
     if (usersLoader) {
         return (
             <CenterLoaderSpan>
@@ -28,24 +44,27 @@ const Users = () => {
         )
     }
     return (
+        <>
+            {isUserDetailsModalOpen === true ? <UserDetailsModal user={user} /> : null}
+            {usersList.map((val) => {
+                return (
+                    <Card key={val.id} >
+                        <CardBody>
+                            <h3>Id : {val.id}</h3>
+                            <p>Name : {val.name}</p>
+                            <p>email : {val.email}</p>
+                        </CardBody>
+                        <ButtonDiv>
+                            <Button onClick={() => viewDetails(val.id)}>Details</Button>
+                            <Button>Edit</Button>
+                            <Button>delete</Button>
+                        </ButtonDiv>
+                    </Card >
+                )
+            })}
+        </>
 
-        usersList.map((val) => {
-            return (
 
-                <Card key={val.id}>
-                    <CardBody>
-                        <h3>Id : {val.id}</h3>
-                        <p>Name : {val.name}</p>
-                        <p>email : {val.email}</p>
-                    </CardBody>
-                    <ButtonDiv>
-                        <Button>Details</Button>
-                        <Button>Edit</Button>
-                        <Button>delete</Button>
-                    </ButtonDiv>
-                </Card>
-            )
-        })
 
 
     )
