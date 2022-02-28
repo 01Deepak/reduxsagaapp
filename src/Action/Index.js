@@ -1,4 +1,4 @@
-import { GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL } from "./ActionTypes"
+import { GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER } from "./ActionTypes"
 
 
 export const AllUserList = () => {
@@ -23,5 +23,12 @@ export const openUserDetailsModal = () => {
 export const clolseUserDetailsModal = () => {
     return {
         type: CLOSEUSERDETAILSMODAL
+    }
+}
+
+export const deleteUserFromList = (payload) => {
+    return {
+        type: DELETEUSER,
+        payload: payload
     }
 }

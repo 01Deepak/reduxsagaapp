@@ -1,4 +1,4 @@
-import { GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL } from "../Action/ActionTypes"
+import { GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER } from "../Action/ActionTypes"
 
 const initialState = {
     usersList: [],
@@ -30,6 +30,12 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isUserDetailsModalOpen: false
+            }
+
+        case DELETEUSER:
+            return {
+                ...state,
+                usersList: action.payload
             }
 
 

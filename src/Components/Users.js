@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllUserList, openUserDetailsModal } from '../Action/Index';
+import { AllUserList, openUserDetailsModal, deleteUserFromList } from '../Action/Index';
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
@@ -36,6 +36,16 @@ const Users = () => {
         document.body.style.overflow = 'hidden';
     }
 
+    const deleteUser = (id) => {
+        const afterDeleteUserList = usersList.filter((val) => {
+            if (val.id === id) {
+                return false
+            }
+            return true
+        })
+        dispatch(deleteUserFromList(afterDeleteUserList));
+    }
+
     if (usersLoader) {
         return (
             <CenterLoaderSpan>
@@ -57,7 +67,7 @@ const Users = () => {
                         <ButtonDiv>
                             <Button onClick={() => viewDetails(val.id)}>Details</Button>
                             <Button>Edit</Button>
-                            <Button>delete</Button>
+                            <Button onClick={() => deleteUser(val.id)}>delete</Button>
                         </ButtonDiv>
                     </Card >
                 )
