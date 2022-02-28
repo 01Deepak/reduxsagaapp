@@ -4,11 +4,13 @@ import { AllUserList, openUserDetailsModal, deleteUserFromList } from '../Action
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
+import { openIsUserDeleteModal } from '../Action/Index';
+import IsDeleteUserModal from './IsDeleteUserModal';
 
 
 const Users = () => {
     const dispatch = useDispatch();
-    const { usersList, usersLoader, isUserDetailsModalOpen } = useSelector((state) => state.UsersReducer)
+    const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
 
     console.log("usersList--", usersList)
@@ -37,13 +39,15 @@ const Users = () => {
     }
 
     const deleteUser = (id) => {
-        const afterDeleteUserList = usersList.filter((val) => {
-            if (val.id === id) {
-                return false
-            }
-            return true
-        })
-        dispatch(deleteUserFromList(afterDeleteUserList));
+        dispatch(openIsUserDeleteModal(id))
+        document.body.style.overflow = 'hidden';
+        // const afterDeleteUserList = usersList.filter((val) => {
+        //     if (val.id === id) {
+        //         return false
+        //     }
+        //     return true
+        // })
+        // dispatch(deleteUserFromList(afterDeleteUserList));
     }
 
     if (usersLoader) {
@@ -56,6 +60,7 @@ const Users = () => {
     return (
         <>
             {isUserDetailsModalOpen === true ? <UserDetailsModal user={user} /> : null}
+            {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
             {usersList.map((val) => {
                 return (
                     <Card key={val.id} >
@@ -72,6 +77,7 @@ const Users = () => {
                     </Card >
                 )
             })}
+
         </>
 
 

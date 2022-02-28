@@ -1,4 +1,7 @@
-import { GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER } from "./ActionTypes"
+import {
+    GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
+    OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL
+} from "./ActionTypes"
 
 
 export const AllUserList = () => {
@@ -30,5 +33,18 @@ export const deleteUserFromList = (payload) => {
     return {
         type: DELETEUSER,
         payload: payload
+    }
+}
+
+export const openIsUserDeleteModal = (payload) => {
+    return {
+        type: OPENUSERDELETEMODAL,
+        payload: payload
+    }
+}
+
+export const closeIsUserDeleteModal = () => {
+    return {
+        type: CLOSEUSERDELETEMODAL
     }
 }
