@@ -6,11 +6,13 @@ import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
 import { openIsUserDeleteModal } from '../Action/Index';
 import IsDeleteUserModal from './IsDeleteUserModal';
+import AddNewUserModal from './AddNewUserModal';
 
 
 const Users = () => {
     const dispatch = useDispatch();
-    const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal, searchedUsersList } = useSelector((state) => state.UsersReducer)
+    const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal,
+        searchedUsersList, addNewUserModal } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
 
     //console.log("searchedUsersList--", searchedUsersList)
@@ -51,7 +53,7 @@ const Users = () => {
         <>
             {isUserDetailsModalOpen === true ? <UserDetailsModal user={user} /> : null}
             {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
-
+            {addNewUserModal === true ? <AddNewUserModal /> : null}
             {searchedUsersList.length !== 0 ?
                 searchedUsersList.map((val) => {
                     return (
