@@ -1,6 +1,6 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
-    OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL
+    OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST
 } from "./ActionTypes"
 
 
@@ -48,3 +48,11 @@ export const closeIsUserDeleteModal = () => {
         type: CLOSEUSERDELETEMODAL
     }
 }
+
+export const afterSerchUsersList = (payload) => {
+    return {
+        type: AFTERSEARCHUSERSLIST,
+        payload: payload
+    }
+}
+

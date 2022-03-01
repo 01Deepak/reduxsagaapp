@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 //import '../Styles/navbar.css'
-import { Nav, LeftNav } from '../Styles/StyledNavbar';
+import { Nav, LeftNav, RightNav, Input } from '../Styles/StyledNavbar';
+import { afterSerchUsersList } from '../Action/Index'
 
 const Navbar = () => {
+    const [inputSearch, setInputSearch] = useState('');
+    const dispatch = useDispatch();
+    const { usersList } = useSelector((state) => state.UsersReducer)
+    //console.log("usersList--", usersList)
+    const onchangeSearch = (event) => {
+        setInputSearch(event.target.value)
+        search(event.target.value)
+    }
+
+    const search = (input) => {
+        const afterSearchUserList = usersList.filter((val) => {
+            if (val.name.toLowerCase().includes(input.toLowerCase()) || val.email.toLowerCase().includes(input.toLowerCase())) {
+                return true;
+            }
+            return false;
+        })
+        console.log("afterSearchUserList--", afterSearchUserList)
+        dispatch(afterSerchUsersList(afterSearchUserList))
+
+    }
+
     return (
         <Nav>
             <LeftNav>
@@ -12,13 +35,19 @@ const Navbar = () => {
 
                 </ul>
             </LeftNav>
-            <div className='right_nav'>
+            <RightNav>
                 <ul>
+                    <li>
+                        <Input type="text"
+                            placeholder="Search"
+                            onChange={onchangeSearch}
+                            value={inputSearch}
+                        />
+                    </li>
                     <li><button>+</button></li>
-                    <li></li>
 
                 </ul>
-            </div>
+            </RightNav>
         </Nav>
 
     )

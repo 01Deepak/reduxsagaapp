@@ -14,7 +14,7 @@ width: 100vw;
 
 & ul{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     list-style: none;
 
@@ -49,4 +49,13 @@ width: 100vw;
 
 export const LeftNav = styled.div`
 font-weight: 700;
+`
+
+export const RightNav = styled.div`
+max-width: 15rem;
+`
+export const Input = styled.input`
+padding: 0.4em;
+    border: 1px solid blue;
+    border-radius: 16px;
 `
