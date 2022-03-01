@@ -1,6 +1,7 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN,
-    CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST
+    CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL,
+    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL
 } from "../Action/ActionTypes"
 
 const initialState = {
@@ -9,7 +10,8 @@ const initialState = {
     isUserDetailsModalOpen: false,
     isUserDeleteModal: false,
     idForDeleteUser: null,
-    searchedUsersList: []
+    searchedUsersList: [],
+    addNewUserModal: false
 }
 
 const userReducer = (state = initialState, action) => {
@@ -64,6 +66,17 @@ const userReducer = (state = initialState, action) => {
                 searchedUsersList: action.payload
             }
 
+        case OPENADDNEWUSERMODAL:
+            return {
+                ...state,
+                addNewUserModal: true
+            }
+
+        case CLOSEADDNEWUSERMODAL:
+            return {
+                ...state,
+                addNewUserModal: false
+            }
 
 
         default: return state;

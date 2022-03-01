@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import '../Styles/navbar.css'
 import { Nav, LeftNav, RightNav, Input } from '../Styles/StyledNavbar';
-import { afterSerchUsersList } from '../Action/Index'
+import { afterSerchUsersList, openAddNewUserModal } from '../Action/Index'
 
 const Navbar = () => {
     const [inputSearch, setInputSearch] = useState('');
@@ -23,7 +23,11 @@ const Navbar = () => {
         })
         console.log("afterSearchUserList--", afterSearchUserList)
         dispatch(afterSerchUsersList(afterSearchUserList))
+    }
 
+    const openModal = () => {
+        dispatch(openAddNewUserModal())
+        document.body.style.overflow = 'hidden';
     }
 
     return (
@@ -44,7 +48,7 @@ const Navbar = () => {
                             value={inputSearch}
                         />
                     </li>
-                    <li><button>+</button></li>
+                    <li><button onClick={openModal}>+</button></li>
 
                 </ul>
             </RightNav>
