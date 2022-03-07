@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AllUserList, openUserDetailsModal, deleteUserFromList } from '../Action/Index';
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
@@ -10,18 +10,48 @@ import AddNewUserModal from './AddNewUserModal';
 
 
 const Users = () => {
+    let root = document.documentElement;
     const dispatch = useDispatch();
     const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal,
         searchedUsersList, addNewUserModal } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
+    const prevY = useRef(0);
+    const [targetElement, setTargetElement] = useState(null);
 
-    //console.log("searchedUsersList--", searchedUsersList)
-
+    console.log("usersList.data--", usersList.data)
+    console.log("searchedUsersList.data--", searchedUsersList.data)
+    console.log("usersLoader--", usersLoader)
     useEffect(async () => {
 
 
         dispatch(AllUserList());
     }, [])
+
+
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+    };
+
+    const handleObserver = (entities, observer) => {
+        const y = entities[0].boundingClientRect.y;
+
+        if (prevY.current > y) {
+            alert("you have reached end...")
+        }
+
+        prevY.current = y;
+    };
+    const observer = useRef(new IntersectionObserver(handleObserver, options));
+
+    useEffect(() => {
+        if (targetElement) {
+            observer.current.observe(targetElement);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [targetElement]);
 
     const viewDetails = (id) => {
         dispatch(openUserDetailsModal());
@@ -42,6 +72,7 @@ const Users = () => {
 
     }
 
+
     if (usersLoader) {
         return (
             <CenterLoaderSpan>
@@ -54,14 +85,16 @@ const Users = () => {
             {isUserDetailsModalOpen === true ? <UserDetailsModal user={user} /> : null}
             {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
             {addNewUserModal === true ? <AddNewUserModal /> : null}
-            {searchedUsersList.length !== 0 ?
-                searchedUsersList.map((val) => {
+            {searchedUsersList.data !== undefined ?
+                searchedUsersList.data.map((val) => {
                     return (
-                        <Card key={val.id} >
+                        <Card key={val.id}
+                            ref={setTargetElement}
+                        >
                             <CardBody>
                                 <h3>Id : {val.id}</h3>
-                                <p>Name : {val.name}</p>
-                                <p>email : {val.email}</p>
+                                <p>Name : {val.title} {val.firstName} {val.lastName}</p>
+
                             </CardBody>
                             <ButtonDiv>
                                 <Button onClick={() => viewDetails(val.id)}>Details</Button>
@@ -71,8 +104,28 @@ const Users = () => {
                         </Card >
                     )
                 })
+                //((root.scrollTop + root.clientHeight) === root.scrollHeight) ? console.log("end") : null
                 : <h1>No Data Found...</h1>
             }
+            {/* {
+                console.log("root", root) ||
+                    console.log("root.scrollTop", root.scrollTop) ||
+                    console.log("root.clientHeight", root.clientHeight) ||
+                    console.log("root.scrollHeight", root.scrollHeight) ||
+                    searchedUsersList.data ?
+                    window.addEventListener("scroll", event => {
+
+                        if ((root.scrollTop + root.clientHeight) === root.scrollHeight) {
+                            alert("end");
+                            console.log("root.scrollTop----", root.scrollTop)
+                        }
+                    })
+                    ||
+                    console.log("1")
+                    : null
+
+            } */}
+
 
 
         </>
