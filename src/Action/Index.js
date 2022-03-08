@@ -1,12 +1,14 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
-    OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL
+    OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL,
+    ISINFINITELOADER, ISUSERLOADER
 } from "./ActionTypes"
 
 
-export const AllUserList = () => {
+export const AllUserList = (payload) => {
     return {
-        type: GETALLUSERLIST
+        type: GETALLUSERLIST,
+        payload: payload
     }
 }
 
@@ -65,6 +67,17 @@ export const openAddNewUserModal = () => {
 export const closeAddNewUserModal = () => {
     return {
         type: CLOSEADDNEWUSERMODAL
+    }
+}
+export const openUserLoader = () => {
+    return {
+        type: ISUSERLOADER
+    }
+}
+export const openInfiniteLoder = () => {
+    console.log('hey')
+    return {
+        type: ISINFINITELOADER
     }
 }
 
