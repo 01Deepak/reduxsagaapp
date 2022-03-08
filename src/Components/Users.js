@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllUserList, openUserDetailsModal, deleteUserFromList } from '../Action/Index';
+import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader } from '../Action/Index';
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
@@ -13,63 +13,77 @@ const Users = () => {
     let root = document.documentElement;
     const dispatch = useDispatch();
     const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal,
-        searchedUsersList, addNewUserModal } = useSelector((state) => state.UsersReducer)
+        searchedUsersList, addNewUserModal, infiniteLoader } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
     const prevY = useRef(0);
     const [targetElement, setTargetElement] = useState(null);
+    const redRef = useRef(null);
 
-    console.log("usersList.data--", usersList.data)
-    console.log("searchedUsersList.data--", searchedUsersList.data)
-    console.log("usersLoader--", usersLoader)
+    let [page, setPage] = useState(0)
+
+    // console.log("usersList.data--", usersList.data)
+    // console.log("searchedUsersList.data--", searchedUsersList.data)
+    // console.log("usersLoader--", usersLoader)
+    // console.log("infiniteLoader---", infiniteLoader)
     useEffect(async () => {
-
-
-        dispatch(AllUserList());
+        dispatch(openUserLoader())
+        dispatch(AllUserList(page))
     }, [])
 
-
     const options = {
-        root: null,
+        root: document.querySelector('#scrollArea'),
         rootMargin: "0px",
-        threshold: 1.0,
+        threshold: 0,
+        delay: 100,
+        trackVisibility: true
     };
 
     const handleObserver = (entities, observer) => {
-        const y = entities[0].boundingClientRect.y;
+        console.log('1111111 -', entities)
+        console.log('2222222 -', observer)
 
-        if (prevY.current > y) {
-            alert("you have reached end...")
+        const y = entities[0].boundingClientRect.y;
+        console.log('111', entities[0].isVisible)
+
+        if (entities[0].isVisible) {
+            dispatch(openInfiniteLoder())
+            console.log("page--", page)
+            console.log("pagetype--", typeof (page))
+            setPage(page++)
+            console.log("page+1 --", page)
+            console.log("page --", page)
+            dispatch(AllUserList(page))
+
         }
 
-        prevY.current = y;
+        // prevY.current = y;
     };
     const observer = useRef(new IntersectionObserver(handleObserver, options));
 
-    useEffect(() => {
-        if (targetElement) {
-            observer.current.observe(targetElement);
-        }
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [targetElement]);
+
+    useEffect(() => {
+        console.log("5555", redRef)
+        if (redRef.current) {
+            console.log(redRef)
+            observer.current.observe(redRef.current);
+        }
+    }, [redRef.current]);
 
     const viewDetails = (id) => {
         dispatch(openUserDetailsModal());
-        //console.log("clicked ", id)
         const filterUser = usersList.filter((val) => {
             if (val.id === id) {
                 return true
             }
         })
         setUser(filterUser)
-
         document.body.style.overflow = 'hidden';
     }
 
     const deleteUser = (id) => {
         dispatch(openIsUserDeleteModal(id))
         document.body.style.overflow = 'hidden';
-
     }
 
 
@@ -80,17 +94,16 @@ const Users = () => {
             </CenterLoaderSpan>
         )
     }
+
     return (
         <>
             {isUserDetailsModalOpen === true ? <UserDetailsModal user={user} /> : null}
             {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
             {addNewUserModal === true ? <AddNewUserModal /> : null}
-            {searchedUsersList.data !== undefined ?
-                searchedUsersList.data.map((val) => {
+            {searchedUsersList !== undefined ?
+                searchedUsersList.map((val) => {
                     return (
-                        <Card key={val.id}
-                            ref={setTargetElement}
-                        >
+                        <Card key={val.id}>
                             <CardBody>
                                 <h3>Id : {val.id}</h3>
                                 <p>Name : {val.title} {val.firstName} {val.lastName}</p>
@@ -102,37 +115,26 @@ const Users = () => {
                                 <Button onClick={() => deleteUser(val.id)}>delete</Button>
                             </ButtonDiv>
                         </Card >
+
                     )
-                })
+                }
+
+
+                )
                 //((root.scrollTop + root.clientHeight) === root.scrollHeight) ? console.log("end") : null
                 : <h1>No Data Found...</h1>
             }
-            {/* {
-                console.log("root", root) ||
-                    console.log("root.scrollTop", root.scrollTop) ||
-                    console.log("root.clientHeight", root.clientHeight) ||
-                    console.log("root.scrollHeight", root.scrollHeight) ||
-                    searchedUsersList.data ?
-                    window.addEventListener("scroll", event => {
 
-                        if ((root.scrollTop + root.clientHeight) === root.scrollHeight) {
-                            alert("end");
-                            console.log("root.scrollTop----", root.scrollTop)
-                        }
-                    })
-                    ||
-                    console.log("1")
-                    : null
-
+            {/* {infiniteLoader === true ?
+                <h1>Loading...</h1>
+                : <div ref={redRef} style={{ width: '300px', background: 'red', height: '300px' }}></div>
             } */}
-
-
-
+            {infiniteLoader === true ?
+                <h1>Loading...</h1>
+                : null
+            }
+            <div id='scrollArea' ref={redRef} style={{ width: '300px', background: 'red', height: '50px' }}></div>
         </>
-
-
-
-
     )
 }
 
