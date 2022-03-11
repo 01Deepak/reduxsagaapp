@@ -1,7 +1,7 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN,
     CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL,
-    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER
+    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM
 } from "../Action/ActionTypes"
 
 const initialState = {
@@ -12,7 +12,13 @@ const initialState = {
     idForDeleteUser: null,
     searchedUsersList: [],
     addNewUserModal: false,
-    infiniteLoader: false
+    infiniteLoader: false,
+    totalData: 0,
+    totalLimit: 0,
+    fetchMore: null,
+    pageNumber: 0,
+    bottom: false
+
 }
 
 const userReducer = (state = initialState, action) => {
@@ -33,17 +39,19 @@ const userReducer = (state = initialState, action) => {
         case GETALLUSERLIST:
             return {
                 ...state
-
-
             }
         case GETALLUSERLISTSUCCESS:
-            console.log(action.payload.data)
+            // console.log("total--", action.payload.total)
             return {
                 ...state,
                 usersList: [...state.usersList, ...action.payload.data],
                 searchedUsersList: [...state.searchedUsersList, ...action.payload.data],
                 usersLoader: false,
-                infiniteLoader: false
+                infiniteLoader: false,
+                totalData: action.payload.total,
+                totalLimit: action.payload.limit,
+                pageNumber: (action.payload.page + 1),
+                bottom: false
             }
 
         case ISUSERDETAILSMODALOPEN:
@@ -93,6 +101,12 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 addNewUserModal: false
+            }
+
+        case ISBOTTOM:
+            return {
+                ...state,
+                bottom: true
             }
 
 

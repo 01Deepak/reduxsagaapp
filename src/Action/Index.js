@@ -1,7 +1,7 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
     OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL,
-    ISINFINITELOADER, ISUSERLOADER
+    ISINFINITELOADER, ISUSERLOADER, ISBOTTOM
 } from "./ActionTypes"
 
 
@@ -75,9 +75,16 @@ export const openUserLoader = () => {
     }
 }
 export const openInfiniteLoder = () => {
-    console.log('hey')
+    // console.log('hey')
     return {
         type: ISINFINITELOADER
+    }
+}
+
+export const trueBottom = () => {
+    // console.log('hey')
+    return {
+        type: ISBOTTOM
     }
 }
 
