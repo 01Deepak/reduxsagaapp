@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader } from '../Action/Index';
-import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan } from '../Styles/UsersStyles';
+import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader, trueBottom } from '../Action/Index';
+import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan, UsersImageContainer, CenterImageContainer } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
 import { openIsUserDeleteModal } from '../Action/Index';
@@ -13,22 +13,40 @@ const Users = () => {
     let root = document.documentElement;
     const dispatch = useDispatch();
     const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal,
-        searchedUsersList, addNewUserModal, infiniteLoader } = useSelector((state) => state.UsersReducer)
+        searchedUsersList, addNewUserModal, infiniteLoader,
+        totalData, totalLimit, pageNumber, bottom } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
     const prevY = useRef(0);
     const [targetElement, setTargetElement] = useState(null);
     const redRef = useRef(null);
 
-    let [page, setPage] = useState(0)
+    // let [page, setPage] = useState(0)
+    //const [bottom, setBottom] = useState(false)
+    const [page, setPage] = useState(0)
+    const [someState, setSomeState] = useState("Deepak")
 
-    // console.log("usersList.data--", usersList.data)
-    // console.log("searchedUsersList.data--", searchedUsersList.data)
-    // console.log("usersLoader--", usersLoader)
-    // console.log("infiniteLoader---", infiniteLoader)
+
+    //console.log("PageNumber--", pageNumber)
+    //console.log("----searchedUsersList.length--", searchedUsersList.length)
+    //console.log("PageNumber--", pageNumber)
+
     useEffect(async () => {
         dispatch(openUserLoader())
         dispatch(AllUserList(page))
     }, [])
+
+    useEffect(() => {
+        // console.log("bottom--", bottom)
+        // console.log("pageNumber--", pageNumber)
+        // console.log("----searchedUsersList.length--", searchedUsersList.length)
+        // console.log("----totalData--", totalData)
+        if (bottom && (searchedUsersList.length !== totalData)) {
+            // setPage(page + 1)
+            dispatch(openInfiniteLoder())
+            dispatch(AllUserList(pageNumber))
+        }
+
+    }, [bottom])
 
     const options = {
         root: document.querySelector('#scrollArea'),
@@ -38,24 +56,19 @@ const Users = () => {
         trackVisibility: true
     };
 
+
     const handleObserver = (entities, observer) => {
-        console.log('1111111 -', entities)
-        console.log('2222222 -', observer)
+        // console.log('1111111 -', entities)
+        // console.log('2222222 -', observer)
 
         const y = entities[0].boundingClientRect.y;
-        console.log('111', entities[0].isVisible)
-
+        // console.log('111', entities[0].isVisible)
+        // console.log("pageNumber--in--", pageNumber)
         if (entities[0].isVisible) {
-            dispatch(openInfiniteLoder())
-            console.log("page--", page)
-            console.log("pagetype--", typeof (page))
-            setPage(page++)
-            console.log("page+1 --", page)
-            console.log("page --", page)
-            dispatch(AllUserList(page))
-
+            dispatch(trueBottom())
+            // dispatch(openInfiniteLoder())
+            //dispatch(AllUserList(pageNumber))
         }
-
         // prevY.current = y;
     };
     const observer = useRef(new IntersectionObserver(handleObserver, options));
@@ -63,9 +76,9 @@ const Users = () => {
 
 
     useEffect(() => {
-        console.log("5555", redRef)
+        //  console.log("5555", redRef)
         if (redRef.current) {
-            console.log(redRef)
+            // console.log(redRef)
             observer.current.observe(redRef.current);
         }
     }, [redRef.current]);
@@ -101,10 +114,18 @@ const Users = () => {
             {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
             {addNewUserModal === true ? <AddNewUserModal /> : null}
             {searchedUsersList !== undefined ?
-                searchedUsersList.map((val) => {
+                searchedUsersList.map((val, length) => {
+                    // console.log("length", length)
+                    // console.log("val.length", val.length)
                     return (
                         <Card key={val.id}>
                             <CardBody>
+                                <UsersImageContainer>
+                                    <CenterImageContainer>
+                                        <img src={val.picture} alt='img' />
+                                    </CenterImageContainer>
+
+                                </UsersImageContainer>
                                 <h3>Id : {val.id}</h3>
                                 <p>Name : {val.title} {val.firstName} {val.lastName}</p>
 
@@ -115,6 +136,7 @@ const Users = () => {
                                 <Button onClick={() => deleteUser(val.id)}>delete</Button>
                             </ButtonDiv>
                         </Card >
+
 
                     )
                 }
@@ -130,10 +152,13 @@ const Users = () => {
                 : <div ref={redRef} style={{ width: '300px', background: 'red', height: '300px' }}></div>
             } */}
             {infiniteLoader === true ?
-                <h1>Loading...</h1>
+                <CenterLoaderSpan>
+                    <TailSpin color="#00BFFF" height={50} width={50} />
+                </CenterLoaderSpan>
+
                 : null
             }
-            <div id='scrollArea' ref={redRef} style={{ width: '300px', background: 'red', height: '50px' }}></div>
+            <div id='scrollArea' ref={redRef} style={{ width: '5px', background: 'white', height: '5px' }}></div>
         </>
     )
 }

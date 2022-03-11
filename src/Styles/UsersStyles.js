@@ -52,3 +52,30 @@ margin: 50px auto;
 export const CenterLoaderSpan = styled.span`
 margin: auto;
 `
+export const UsersImageContainer = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+// min-height: 8rem;
+`
+
+export const CenterImageContainer = styled.div`
+// height: 10rem;
+// width: 10rem;
+// border: 2px solid blue;
+// border-radius: 50%;
+// display: flex;
+// justify-content: center;
+// align-items: center;
+& img {
+    height: 4rem;
+    width: 4rem;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+`
+
+
