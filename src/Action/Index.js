@@ -1,7 +1,8 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
     OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL,
-    ISINFINITELOADER, ISUSERLOADER, ISBOTTOM
+    ISINFINITELOADER, ISUSERLOADER, ISBOTTOM,
+    USERDETAILSINITIATE, USERDETAILSSUCCESS
 } from "./ActionTypes"
 
 
@@ -88,3 +89,18 @@ export const trueBottom = () => {
     }
 }
 
+export const initiateUserDetails = (payload) => {
+    // console.log('hey')
+    return {
+        type: USERDETAILSINITIATE,
+        payload: payload
+    }
+}
+
+export const successUserDetails = (payload) => {
+    // console.log('hey')
+    return {
+        type: USERDETAILSSUCCESS,
+        payload: payload
+    }
+}

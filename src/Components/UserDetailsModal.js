@@ -1,42 +1,86 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clolseUserDetailsModal } from '../Action/Index'
+import { clolseUserDetailsModal, openLoaderInModal } from '../Action/Index'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '../Styles/UserDetailsModalStyles'
-import { Button } from '../Styles/UsersStyles'
+import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan, UsersImageContainer, CenterImageContainer } from '../Styles/UsersStyles';
+import { TailSpin } from 'react-loader-spinner'
 
 
 const UserDetailsModal = (props) => {
 
     const dispatch = useDispatch();
-    const userDetails = props.user[0];
+    const { userDetailsById, userDetailsLoader } = useSelector((state) => state.UsersReducer)
+    const { id, firstName, title, lastName, picture, dateOfBirth, email, gender, phone, registerDate, updatedDate, location } = userDetailsById
 
-    const clolseModal = () => {
+    // useEffect(() => {
+    //     dispatch(openLoaderInModal())
+    // }, [])
+
+    const closeModal = () => {
         dispatch(clolseUserDetailsModal())
         document.body.style.overflow = 'unset'
     }
 
     return (
-        <Modal>
-            <ModalContent>
-                <ModalHeader>
-                    <h3>User Details</h3>
-                </ModalHeader>
-                <ModalBody>
-                    <p>ID : {userDetails.id}</p>
-                    <p>Name : {userDetails.name}</p>
-                    <p>User Name : {userDetails.username}</p>
-                    <p>Phone : {userDetails.phone}</p>
-                    <p>Email : {userDetails.email}</p>
-                    <p>Address : {userDetails.address.street + " , " + userDetails.address.city + " , " + userDetails.address.zipcode}</p>
-                    <p>Company Name : {userDetails.company.name}</p>
+        <>
 
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={clolseModal}>Close</Button>
-                </ModalFooter>
-            </ModalContent>
-        </Modal>
+
+
+            <Modal>
+                <ModalContent>
+                    <ModalHeader>
+
+                    </ModalHeader>
+                    <ModalBody>
+                        <Card>
+                            {
+                                userDetailsLoader !== null
+                                    ?
+                                    <div style={{ display: "flex" }}>
+                                        <CenterLoaderSpan>
+                                            <TailSpin color="#00BFFF" height={224} width={50} />
+                                        </CenterLoaderSpan>
+                                    </div>
+                                    :
+                                    <CardBody>
+                                        <UsersImageContainer>
+                                            <CenterImageContainer>
+                                                <img src={picture} alt='img' />
+                                            </CenterImageContainer>
+
+                                        </UsersImageContainer>
+                                        <h3>Id : {id}</h3>
+                                        <p>Name : {title} {firstName} {lastName}</p>
+                                        <p> dateOfBirth: {dateOfBirth}</p>
+                                        <p> email: {email}</p>
+                                        <p> gender: {gender}</p>
+                                        <p> phone: {phone}</p>
+                                        <p> registerDate: {registerDate}</p>
+                                        <p> updatedDate: {updatedDate}</p>
+                                        <p> dateOfBirth: {dateOfBirth}</p>
+                                        {/* <p> location:{location.street} ,{location.city} ,{location.state} ,{location.country} </p> */}
+
+
+
+                                    </CardBody>
+                            }
+
+
+                        </Card >
+
+
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={closeModal}>Close</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+
+
+        </>
     )
+
 }
+
 
 export default UserDetailsModal

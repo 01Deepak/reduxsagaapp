@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader, trueBottom } from '../Action/Index';
+import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader, trueBottom, initiateUserDetails } from '../Action/Index';
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan, UsersImageContainer, CenterImageContainer } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
 import { openIsUserDeleteModal } from '../Action/Index';
 import IsDeleteUserModal from './IsDeleteUserModal';
 import AddNewUserModal from './AddNewUserModal';
+// import ErrorPage from './ErrorPage';
 
 
 const Users = () => {
@@ -14,7 +15,7 @@ const Users = () => {
     const dispatch = useDispatch();
     const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal,
         searchedUsersList, addNewUserModal, infiniteLoader,
-        totalData, totalLimit, pageNumber, bottom } = useSelector((state) => state.UsersReducer)
+        totalData, totalLimit, pageNumber, bottom, isError, userDetailsLoader } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
     const prevY = useRef(0);
     const [targetElement, setTargetElement] = useState(null);
@@ -24,6 +25,8 @@ const Users = () => {
     //const [bottom, setBottom] = useState(false)
     const [page, setPage] = useState(0)
     const [someState, setSomeState] = useState("Deepak")
+    // console.log("isUserDetailsModalOpen--", isUserDetailsModalOpen)
+
 
 
     //console.log("PageNumber--", pageNumber)
@@ -85,12 +88,10 @@ const Users = () => {
 
     const viewDetails = (id) => {
         dispatch(openUserDetailsModal());
-        const filterUser = usersList.filter((val) => {
-            if (val.id === id) {
-                return true
-            }
-        })
-        setUser(filterUser)
+
+        dispatch(initiateUserDetails(id))
+
+
         document.body.style.overflow = 'hidden';
     }
 
@@ -110,9 +111,11 @@ const Users = () => {
 
     return (
         <>
-            {isUserDetailsModalOpen === true ? <UserDetailsModal user={user} /> : null}
+            {isUserDetailsModalOpen === true ? <UserDetailsModal /> : null}
+
             {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
             {addNewUserModal === true ? <AddNewUserModal /> : null}
+            {/* {isError === true ? <ErrorPage /> : null} */}
             {searchedUsersList !== undefined ?
                 searchedUsersList.map((val, length) => {
                     // console.log("length", length)
@@ -131,7 +134,7 @@ const Users = () => {
 
                             </CardBody>
                             <ButtonDiv>
-                                <Button onClick={() => viewDetails(val.id)}>Details</Button>
+                                <Button onClick={() => viewDetails(val.id)}>{userDetailsLoader === val.id ? 'Loading...' : 'Details'}</Button>
                                 <Button>Edit</Button>
                                 <Button onClick={() => deleteUser(val.id)}>delete</Button>
                             </ButtonDiv>
