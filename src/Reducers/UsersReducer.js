@@ -76,7 +76,8 @@ const userReducer = (state = initialState, action) => {
         case DELETEUSER:
             return {
                 ...state,
-                usersList: action.payload
+                usersList: action.payload,
+                searchedUsersList: action.payload
             }
 
         case OPENUSERDELETEMODAL:
