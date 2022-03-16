@@ -12,9 +12,7 @@ const UserDetailsModal = (props) => {
     const { userDetailsById, userDetailsLoader } = useSelector((state) => state.UsersReducer)
     const { id, firstName, title, lastName, picture, dateOfBirth, email, gender, phone, registerDate, updatedDate, location } = userDetailsById
 
-    // useEffect(() => {
-    //     dispatch(openLoaderInModal())
-    // }, [])
+
 
     const closeModal = () => {
         dispatch(clolseUserDetailsModal())
@@ -49,16 +47,19 @@ const UserDetailsModal = (props) => {
                                             </CenterImageContainer>
 
                                         </UsersImageContainer>
-                                        <h3>Id : {id}</h3>
-                                        <p>Name : {title} {firstName} {lastName}</p>
-                                        <p> dateOfBirth: {dateOfBirth}</p>
-                                        <p> email: {email}</p>
-                                        <p> gender: {gender}</p>
-                                        <p> phone: {phone}</p>
-                                        <p> registerDate: {registerDate}</p>
-                                        <p> updatedDate: {updatedDate}</p>
-                                        <p> dateOfBirth: {dateOfBirth}</p>
-                                        {/* <p> location:{location.street} ,{location.city} ,{location.state} ,{location.country} </p> */}
+                                        <div>
+                                            <h3>Id : {id}</h3>
+                                            <p>Name : {title} {firstName} {lastName}</p>
+                                            <p> dateOfBirth: {dateOfBirth}</p>
+                                            <p> email: {email}</p>
+                                            <p> gender: {gender}</p>
+                                            <p> phone: {phone}</p>
+                                            <p> registerDate: {registerDate}</p>
+                                            <p> updatedDate: {updatedDate}</p>
+                                            <p> dateOfBirth: {dateOfBirth}</p>
+                                            <p> location:{location.street} ,{location.city} ,{location.state} ,{location.country} </p>
+                                        </div>
+
 
 
 

@@ -2,13 +2,19 @@ import styled from "styled-components"
 
 export const Card = styled.div`
 // margin-top: 48px;
-margin: 0.5rem 0.5rem;
-    border: 2px solid;
+// margin: 0.5rem 0.5rem;
+//     border: 2px solid;
+//     min-height: 14rem;
+//     min-width: 20rem;
+//     border-radius: 4px;
+//     background: #eeefff;
+//     color: #505050;
+    margin: 0.5rem 0.5rem;
     min-height: 14rem;
     min-width: 20rem;
     border-radius: 4px;
-    background: #eeefff;
-    color: #505050;
+    background: #f1f2ff;
+    color: #000000;
 `
 export const CardBody = styled.div`
 min-height: 9rem;
