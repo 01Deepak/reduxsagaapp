@@ -1,7 +1,7 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN,
     CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL,
-    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM
+    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM, USERDETAILSSUCCESS, USERDETAILSINITIATE
 } from "../Action/ActionTypes"
 
 const initialState = {
@@ -17,7 +17,11 @@ const initialState = {
     totalLimit: 0,
     fetchMore: null,
     pageNumber: 0,
-    bottom: false
+    bottom: false,
+    userDetailsById: [],
+    isError: false,
+    userDetailsLoader: null,
+    loaderInModal: false
 
 }
 
@@ -51,8 +55,11 @@ const userReducer = (state = initialState, action) => {
                 totalData: action.payload.total,
                 totalLimit: action.payload.limit,
                 pageNumber: (action.payload.page + 1),
-                bottom: false
+                bottom: false,
+                isError: false
             }
+
+
 
         case ISUSERDETAILSMODALOPEN:
             return {
@@ -108,6 +115,22 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 bottom: true
             }
+
+        case USERDETAILSINITIATE:
+            return {
+                ...state,
+                userDetailsLoader: action.payload
+            }
+
+
+        case USERDETAILSSUCCESS:
+            return {
+                ...state,
+                userDetailsById: action.payload,
+                userDetailsLoader: null
+            }
+
+
 
 
         default: return state;
