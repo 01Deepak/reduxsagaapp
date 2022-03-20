@@ -1,7 +1,8 @@
 import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN,
     CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL,
-    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM, USERDETAILSSUCCESS, USERDETAILSINITIATE
+    AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM, USERDETAILSSUCCESS, USERDETAILSINITIATE,
+    SEARCHINPUTS
 } from "../Action/ActionTypes"
 
 const initialState = {
@@ -21,7 +22,8 @@ const initialState = {
     userDetailsById: [],
     isError: false,
     userDetailsLoader: null,
-    loaderInModal: false
+    loaderInModal: false,
+    inputForSearch: ''
 
 }
 
@@ -130,7 +132,11 @@ const userReducer = (state = initialState, action) => {
                 userDetailsById: action.payload,
                 userDetailsLoader: null
             }
-
+        case SEARCHINPUTS:
+            return {
+                ...state,
+                inputForSearch: action.payload
+            }
 
 
 

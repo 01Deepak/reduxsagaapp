@@ -2,7 +2,7 @@ import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
     OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL,
     ISINFINITELOADER, ISUSERLOADER, ISBOTTOM,
-    USERDETAILSINITIATE, USERDETAILSSUCCESS
+    USERDETAILSINITIATE, USERDETAILSSUCCESS, SEARCHINPUTS
 } from "./ActionTypes"
 
 
@@ -101,6 +101,13 @@ export const successUserDetails = (payload) => {
     // console.log('hey')
     return {
         type: USERDETAILSSUCCESS,
+        payload: payload
+    }
+}
+export const updateSearchInput = (payload) => {
+    // console.log('hey')
+    return {
+        type: SEARCHINPUTS,
         payload: payload
     }
 }
