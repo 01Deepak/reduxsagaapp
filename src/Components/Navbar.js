@@ -1,29 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //import '../Styles/navbar.css'
 import { Nav, LeftNav, RightNav, Input } from '../Styles/StyledNavbar';
-import { afterSerchUsersList, openAddNewUserModal } from '../Action/Index'
+import { afterSerchUsersList, openAddNewUserModal, updateSearchInput } from '../Action/Index'
 
 const Navbar = () => {
-    const [inputSearch, setInputSearch] = useState('');
+    // const [inputSearch, setInputSearch] = useState('');
     const dispatch = useDispatch();
-    const { usersList } = useSelector((state) => state.UsersReducer)
-    //console.log("usersList--", usersList)
+    const { usersList, inputForSearch } = useSelector((state) => state.UsersReducer)
+    // console.log("usersList--", usersList)
     const onchangeSearch = (event) => {
-        setInputSearch(event.target.value)
-        search(event.target.value)
+        // setInputSearch(event.target.value)
+
+        dispatch(updateSearchInput(event.target.value))
+
+
     }
+    useEffect(() => {
+        console.log("---", inputForSearch)
+        search(inputForSearch)
+    }, [inputForSearch])
+
 
     const search = (input) => {
+
         const afterSearchUserList = usersList.filter((val) => {
-            if (val.name.toLowerCase().includes(input.toLowerCase()) || val.email.toLowerCase().includes(input.toLowerCase())) {
+            const { title, firstName, lastName, id } = val
+            const fullName = title + firstName + lastName
+            // console.log(fullName)
+            // console.log(input)
+
+            if (fullName.toLowerCase().includes(input.toLowerCase()) || id.toLowerCase().includes(input.toLowerCase())
+            ) {
                 return true;
             }
             return false;
         })
-        // console.log("afterSearchUserList--", afterSearchUserList)
+
         dispatch(afterSerchUsersList(afterSearchUserList))
     }
+
 
     const openModal = () => {
         dispatch(openAddNewUserModal())
@@ -45,7 +61,7 @@ const Navbar = () => {
                         <Input type="text"
                             placeholder="Search"
                             onChange={onchangeSearch}
-                            value={inputSearch}
+                            value={inputForSearch}
                         />
                     </li>
                     <li><button onClick={openModal}>+</button></li>
