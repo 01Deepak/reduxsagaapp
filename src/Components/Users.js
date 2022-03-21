@@ -42,7 +42,7 @@ const Users = () => {
 
         }
 
-    }, [bottom])
+    }, [bottom, inputForSearch])
 
     const options = {
         root: document.querySelector('#scrollArea'),
