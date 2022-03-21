@@ -24,20 +24,19 @@ const Navbar = () => {
 
     const search = (input) => {
 
-        const afterSearchUserList = usersList.filter((val) => {
+        const searchedUserList = usersList.filter((val) => {
             const { title, firstName, lastName, id } = val
             const fullName = title + firstName + lastName
             // console.log(fullName)
             // console.log(input)
 
-            if (fullName.toLowerCase().includes(input.toLowerCase()) || id.toLowerCase().includes(input.toLowerCase())
-            ) {
+            if (fullName.toLowerCase().includes(input.toLowerCase()) || id.toLowerCase().includes(input.toLowerCase())) {
                 return true;
             }
             return false;
         })
 
-        dispatch(afterSerchUsersList(afterSearchUserList))
+        dispatch(afterSerchUsersList(searchedUserList))
     }
 
 
