@@ -2,7 +2,7 @@ import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
     OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL,
     ISINFINITELOADER, ISUSERLOADER, ISBOTTOM,
-    USERDETAILSINITIATE, USERDETAILSSUCCESS, SEARCHINPUTS
+    USERDETAILSINITIATE, USERDETAILSSUCCESS, SEARCHINPUTS, ADDNEWUSER
 } from "./ActionTypes"
 
 
@@ -108,6 +108,14 @@ export const updateSearchInput = (payload) => {
     // console.log('hey')
     return {
         type: SEARCHINPUTS,
+        payload: payload
+    }
+}
+
+export const addNewUser = (payload) => {
+    // console.log('hey')
+    return {
+        type: ADDNEWUSER,
         payload: payload
     }
 }
