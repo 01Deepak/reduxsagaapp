@@ -2,7 +2,7 @@ import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN,
     CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL,
     AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM, USERDETAILSSUCCESS, USERDETAILSINITIATE,
-    SEARCHINPUTS
+    SEARCHINPUTS, ADDNEWUSER
 } from "../Action/ActionTypes"
 
 const initialState = {
@@ -137,6 +137,15 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 inputForSearch: action.payload
             }
+        case ADDNEWUSER:
+            console.log("---", action.payload)
+            console.log("---", action.payload)
+            return {
+                ...state,
+                usersList: [...state.usersList, action.payload],
+                searchedUsersList: [...state.searchedUsersList, action.payload]
+            }
+
 
 
 

@@ -24,7 +24,8 @@ const Users = () => {
 
     const [page, setPage] = useState(0)
     const [someState, setSomeState] = useState("Deepak")
-    //console.log("inputForSearch --", inputForSearch)
+    console.log("usersList --", usersList)
+    console.log("searchedUsersList --", searchedUsersList)
 
     useEffect(async () => {
         dispatch(openUserLoader())
