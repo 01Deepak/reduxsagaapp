@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '../Styles/UserDetailsModalStyles'
-import { Button } from '../Styles/UsersStyles'
-import { closeAddNewUserModal, addNewUser } from '../Action/Index'
+import { Button } from '../Styles/UsersStyles';
+import { closeUpdateUserModal } from '../Action/Index';
 
-const AddNewUserModal = () => {
+const UpdateModal = () => {
 
     const dispatch = useDispatch();
 
@@ -15,7 +15,6 @@ const AddNewUserModal = () => {
         lastName: '',
         picture: ''
     })
-
 
 
 
@@ -32,30 +31,23 @@ const AddNewUserModal = () => {
         })
     }
 
+
     const closeModal = () => {
-        dispatch(closeAddNewUserModal())
+        dispatch(closeUpdateUserModal())
         document.body.style.overflow = 'unset'
     }
 
     const submitNewUserFormData = (e) => {
         e.preventDefault()
         console.log(inputs)
-        dispatch(addNewUser(inputs))
-        setInputs({
-            id: '',
-            title: '',
-            firstName: '',
-            lastName: '',
-            picture: ''
-        })
+
         // alert("click")
     }
-
     return (
         <Modal>
             <ModalContent>
                 <ModalHeader>
-                    <h3>Add New User</h3>
+                    <h3>Update User</h3>
                 </ModalHeader>
                 <ModalBody>
                     <form onSubmit={submitNewUserFormData}>
@@ -111,4 +103,4 @@ const AddNewUserModal = () => {
     )
 }
 
-export default AddNewUserModal
+export default UpdateModal
