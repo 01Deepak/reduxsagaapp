@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader, trueBottom, initiateUserDetails } from '../Action/Index';
+import { AllUserList, openUserDetailsModal, deleteUserFromList, openInfiniteLoder, openUserLoader, trueBottom, initiateUserDetails, openAddNewUserModal, openUpdateUserModal } from '../Action/Index';
 import { Card, Button, CardBody, ButtonDiv, CenterLoaderSpan, UsersImageContainer, CenterImageContainer } from '../Styles/UsersStyles';
 import { TailSpin } from 'react-loader-spinner'
 import UserDetailsModal from './UserDetailsModal';
 import { openIsUserDeleteModal } from '../Action/Index';
 import IsDeleteUserModal from './IsDeleteUserModal';
 import AddNewUserModal from './AddNewUserModal';
+import UpdateModal from './UpdateModal';
 
 
 
@@ -15,7 +16,7 @@ const Users = () => {
     const dispatch = useDispatch();
     const { usersList, usersLoader, isUserDetailsModalOpen, isUserDeleteModal,
         searchedUsersList, addNewUserModal, infiniteLoader,
-        totalData, totalLimit, pageNumber, bottom, isError, userDetailsLoader, inputForSearch } = useSelector((state) => state.UsersReducer)
+        totalData, totalLimit, pageNumber, bottom, isError, userDetailsLoader, inputForSearch, updateUserModal } = useSelector((state) => state.UsersReducer)
     const [user, setUser] = useState()
     const prevY = useRef(0);
     const [targetElement, setTargetElement] = useState(null);
@@ -91,6 +92,11 @@ const Users = () => {
         document.body.style.overflow = 'hidden';
     }
 
+    const editUser = (val) => {
+        dispatch(openUpdateUserModal(val))
+        document.body.style.overflow = 'hidden';
+    }
+
 
     if (usersLoader) {
         return (
@@ -106,7 +112,7 @@ const Users = () => {
 
             {isUserDeleteModal === true ? <IsDeleteUserModal /> : null}
             {addNewUserModal === true ? <AddNewUserModal /> : null}
-
+            {updateUserModal === true ? <UpdateModal /> : null}
             {searchedUsersList !== undefined ?
                 searchedUsersList.map((val, length) => {
 
@@ -125,7 +131,7 @@ const Users = () => {
                             </CardBody>
                             <ButtonDiv>
                                 <Button onClick={() => viewDetails(val.id)}>{userDetailsLoader === val.id ? 'Loading...' : 'Details'}</Button>
-                                <Button>Edit</Button>
+                                <Button onClick={() => editUser(val)}>Edit</Button>
                                 <Button onClick={() => deleteUser(val.id)}>delete</Button>
                             </ButtonDiv>
                         </Card >
