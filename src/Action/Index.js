@@ -2,7 +2,8 @@ import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN, CLOSEUSERDETAILSMODAL, DELETEUSER,
     OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL, AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL,
     ISINFINITELOADER, ISUSERLOADER, ISBOTTOM,
-    USERDETAILSINITIATE, USERDETAILSSUCCESS, SEARCHINPUTS, ADDNEWUSER, OPENUPDATEUSERMODAL, CLOSEUPDATEUSERMODAL
+    USERDETAILSINITIATE, USERDETAILSSUCCESS, SEARCHINPUTS, ADDNEWUSER, OPENUPDATEUSERMODAL, CLOSEUPDATEUSERMODAL,
+    UPDATEUSER
 } from "./ActionTypes"
 
 
@@ -72,9 +73,10 @@ export const closeAddNewUserModal = () => {
 }
 
 
-export const openUpdateUserModal = () => {
+export const openUpdateUserModal = (payload) => {
     return {
-        type: OPENUPDATEUSERMODAL
+        type: OPENUPDATEUSERMODAL,
+        payload:payload
     }
 }
 
@@ -129,6 +131,14 @@ export const addNewUser = (payload) => {
     // console.log('hey')
     return {
         type: ADDNEWUSER,
+        payload: payload
+    }
+}
+
+export const editUser = (payload) => {
+    // console.log('hey')
+    return {
+        type: UPDATEUSER,
         payload: payload
     }
 }
