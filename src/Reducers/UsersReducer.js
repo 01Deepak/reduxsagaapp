@@ -2,7 +2,7 @@ import {
     GETALLUSERLIST, GETALLUSERLISTSUCCESS, ISUSERDETAILSMODALOPEN,
     CLOSEUSERDETAILSMODAL, DELETEUSER, OPENUSERDELETEMODAL, CLOSEUSERDELETEMODAL,
     AFTERSEARCHUSERSLIST, OPENADDNEWUSERMODAL, CLOSEADDNEWUSERMODAL, ISINFINITELOADER, ISUSERLOADER, ISBOTTOM, USERDETAILSSUCCESS, USERDETAILSINITIATE,
-    SEARCHINPUTS, ADDNEWUSER, OPENUPDATEUSERMODAL, CLOSEUPDATEUSERMODAL
+    SEARCHINPUTS, ADDNEWUSER, OPENUPDATEUSERMODAL, CLOSEUPDATEUSERMODAL,UPDATEUSER
 } from "../Action/ActionTypes"
 
 const initialState = {
@@ -24,7 +24,8 @@ const initialState = {
     userDetailsLoader: null,
     loaderInModal: false,
     inputForSearch: '',
-    updateUserModal: false
+    updateUserModal: false,
+    dataForUpdateUser:{}
 
 }
 
@@ -118,6 +119,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updateUserModal: true,
+                dataForUpdateUser:action.payload
             }
 
         case CLOSEUPDATEUSERMODAL:
@@ -159,7 +161,27 @@ const userReducer = (state = initialState, action) => {
                 searchedUsersList: [...state.searchedUsersList, action.payload]
             }
 
-
+            
+            case UPDATEUSER:
+             const updatedData =  state.searchedUsersList.map((elem) => {
+                   if(elem.id === action.payload.id) {
+                      console.log("elem--",elem)
+                      return {
+                          ...elem,
+                          title: action.payload.title,
+                          firstName: action.payload.firstName,
+                          lastName: action.payload.lastName,
+                          picture: action.payload.picture,
+                      }
+                   }
+                   return elem
+               })
+               console.log("updateddata---",updatedData)
+                return {
+                    ...state,
+                    usersList:updatedData,
+                    searchedUsersList:updatedData
+                }
 
 
         default: return state;

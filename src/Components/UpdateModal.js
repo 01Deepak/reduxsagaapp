@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '../Styles/UserDetailsModalStyles'
 import { Button } from '../Styles/UsersStyles';
-import { closeUpdateUserModal } from '../Action/Index';
+import { closeUpdateUserModal,editUser } from '../Action/Index';
 
 const UpdateModal = () => {
 
     const dispatch = useDispatch();
+    const {dataForUpdateUser,searchedUsersList} = useSelector((state) => state.UsersReducer)
+    //console.log("dataforupdateuser---",dataForUpdateUser)
 
     const [inputs, setInputs] = useState({
-        id: '',
-        title: '',
-        firstName: '',
-        lastName: '',
-        picture: ''
+        id: dataForUpdateUser.id,
+        title: dataForUpdateUser.title,
+        firstName: dataForUpdateUser.firstName,
+        lastName: dataForUpdateUser.lastName,
+        picture: dataForUpdateUser.picture
     })
 
 
@@ -37,10 +39,10 @@ const UpdateModal = () => {
         document.body.style.overflow = 'unset'
     }
 
-    const submitNewUserFormData = (e) => {
+    const updateUser = (e) => {
         e.preventDefault()
-        console.log(inputs)
-
+        console.log("inputs-----------",inputs)
+dispatch(editUser(inputs))
         // alert("click")
     }
     return (
@@ -50,7 +52,7 @@ const UpdateModal = () => {
                     <h3>Update User</h3>
                 </ModalHeader>
                 <ModalBody>
-                    <form onSubmit={submitNewUserFormData}>
+                    <form onSubmit={updateUser}>
                         <div>
                             <label>ID : </label>
                             <input type="text" name="id"
@@ -86,7 +88,7 @@ const UpdateModal = () => {
                                 value={inputs.picture} />
                         </div>
                         <ModalFooter>
-                            <Button type='submit'>Save</Button>
+                            <Button type='submit'>update</Button>
                             <Button onClick={closeModal}>Cancel</Button>
                         </ModalFooter>
 
